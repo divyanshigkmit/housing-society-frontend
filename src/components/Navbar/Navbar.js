@@ -1,8 +1,9 @@
 import { Link, Outlet } from "react-router-dom"
 import "./styles.css"
 
+
 export default function Navbar({isLogin, setLogin}) {
-    // let login = (localStorage.getItem("user")) ? false : true;
+    const navigate = useNavigate();
 
     return (
         <>
@@ -25,15 +26,17 @@ export default function Navbar({isLogin, setLogin}) {
                 
             </div>
             <div>
-                {!isLogin ? (<Link to="/login">
+                <Link to="/login">
                     <button type="button" className="login-btn">Login</button>
+
+                </Link>
+
                 </Link>) : (<Link to="/login">
                     <button type="button" className="login-btn"
                         onClick={() => {
                             localStorage.clear();
-                            // login = true;
                             setLogin(false);
-                            return;
+                            navigate('/login');
                         }}
                     >Logout</button>
                 </Link>)
