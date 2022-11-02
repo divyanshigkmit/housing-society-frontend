@@ -1,7 +1,9 @@
 import { Link, Outlet } from "react-router-dom"
 import "./styles.css"
 
-export default function Navbar() {
+export default function Navbar({isLogin, setLogin}) {
+    // let login = (localStorage.getItem("user")) ? false : true;
+
     return (
         <>
         <div className="nav">
@@ -23,9 +25,20 @@ export default function Navbar() {
                 
             </div>
             <div>
-                <Link to="/login">
+                {!isLogin ? (<Link to="/login">
                     <button type="button" className="login-btn">Login</button>
-                </Link>
+                </Link>) : (<Link to="/login">
+                    <button type="button" className="login-btn"
+                        onClick={() => {
+                            localStorage.clear();
+                            // login = true;
+                            setLogin(false);
+                            return;
+                        }}
+                    >Logout</button>
+                </Link>)
+                }
+                
             </div>   
         </div>
         <Outlet/>
