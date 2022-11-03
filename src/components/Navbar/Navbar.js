@@ -1,9 +1,43 @@
+import React, { useEffect } from "react";
 import { Link, Outlet, Navigate } from "react-router-dom"
-import "./styles.css"
+import "./NavbarStyles.css"
 
 export default function Navbar({isLogin, setLogin}) {
     // let login = (localStorage.getItem("user")) ? false : true;
-    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        const getData = async () => {
+          try {
+            const response = await fetch(
+              `http://localhost:3000/api/tokenCheck`, {
+              method: "get",
+              headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${token}`,
+                'userId': JSON.parse(userId)
+              }
+            }
+            );
+            if (!response.ok) {
+              throw new Error(
+                `This is an HTTP error: The status is ${response.status}`
+              );
+            }
+            let actualData = await response.json();
+            // setError(null);
+            if(actualData.status == 200) setLogin(true);
+          } catch (err) {
+            setLogin(false);
+
+            // setError(err.message);
+            // setData(null);
+          // } finally {
+          //   setLoading(false);
+          }
+        }
+        getData()
+      }, [])
     return (
         <>
         <div className="nav">

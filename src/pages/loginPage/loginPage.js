@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import "./loginPageStyles.css"
 import { useNavigate } from "react-router-dom";
+
+import "./loginPageStyles.css"
 
 export default function LoginPage({setLogin}) {
     const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function LoginPage({setLogin}) {
             });
             let results = await result.json();
             localStorage.setItem('token', results.token);
-            localStorage.setItem('user', 'true');
+            localStorage.setItem('userId', JSON.stringify(results.userId));
 
             if(result.status == 200) {
                 setLogin(true);
