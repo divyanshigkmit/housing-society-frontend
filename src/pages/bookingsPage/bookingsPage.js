@@ -4,15 +4,14 @@ import "./bookingsPageStyles.css"
 export default function BookingPage() {
 
   const [bookingsTable, setData] = useState([]);
-  // const [error, setError] = useState("");
-  // const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem("userId");
     const getData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/resbook`, {
+          `http://localhost:3000/api/bookings`, {
           method: "get",
           headers: {
             'Content-type': 'application/json',
@@ -27,26 +26,15 @@ export default function BookingPage() {
           );
         }
         let actualData = await response.json();
-        console.log(actualData)
-        setData(actualData.Response);
-        // setError(null);
+        setData(actualData.response);
       } catch (err) {
         alert(err);
-        // setError(err.message);
-        // setData(null);
-      // } finally {
-      //   setLoading(false);
       }
     }
     getData()
   }, [])
-  console.log(bookingsTable);
+
   return (
-    // <div>
-    //   {usersTable.map(user=> {
-    //     return (<p>{user.first_name}</p>)
-    //   })}
-    // </div>
     <div className="table-container">
       <table>
         <thead>
@@ -59,7 +47,7 @@ export default function BookingPage() {
         </thead>
         <tbody>
           {bookingsTable?.map((booking) => {
-            return (<tr>
+            return (<tr key={booking.id}>
               <td>{booking.id}</td>
               <td>{booking.resource_id}</td>
               <td>{booking.user_id}</td>

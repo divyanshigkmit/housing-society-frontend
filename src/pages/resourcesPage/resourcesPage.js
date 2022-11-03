@@ -4,8 +4,7 @@ import "./resourcesPageStyles.css"
 export default function UsersPage() {
 
   const [resourceTable, setData] = useState([]);
-  // const [error, setError] = useState("");
-  // const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem("userId");
@@ -28,24 +27,14 @@ export default function UsersPage() {
         }
         let actualData = await response.json();
         setData(actualData);
-        // setError(null);
       } catch (err) {
         alert(err);
-        // setError(err.message);
-        // setData(null);
-      // } finally {
-      //   setLoading(false);
       }
     }
     getData()
   }, [])
-  // console.log(usersTable)
+  
   return (
-    // <div>
-    //   {usersTable.map(user=> {
-    //     return (<p>{user.first_name}</p>)
-    //   })}
-    // </div>
     <div className="table-container">
       <table>
         <thead>
@@ -57,7 +46,7 @@ export default function UsersPage() {
         </thead>
         <tbody>
           {resourceTable.response?.map((resource) => {
-            return (<tr>
+            return (<tr key={resource.id}>
               <td>{resource.id}</td>
               <td>{resource.name}</td>
               <td>{resource.status}</td>
