@@ -27,7 +27,7 @@ export default function UsersPage() {
           );
         }
         let actualData = await response.json();
-        setData(actualData.response);
+        setData(actualData);
         // setError(null);
       } catch (err) {
         alert(err);
@@ -56,7 +56,7 @@ export default function UsersPage() {
           </tr>
         </thead>
         <tbody>
-          {resourceTable.map((resource) => {
+          {resourceTable.response?.map((resource) => {
             return (<tr>
               <td>{resource.id}</td>
               <td>{resource.name}</td>
