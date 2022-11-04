@@ -1,38 +1,40 @@
 import React, { useState, useEffect } from "react"
 import "./resourcesPageStyles.css"
 
-export default function UsersPage() {
+export default function ResourcesPage() {
 
-  const [resourceTable, setData] = useState([]);
+  const [resourcesData, setResourcesData] = useState([]);
   
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem("userId");
-    const getData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/api/resources`, {
-          method: "get",
-          headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${token}`,
-            'userId': JSON.parse(userId)
-          }
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem("userId");
+        if(token) {
+            const getResourcesData = async () => {
+                try {
+                const response = await fetch(
+                    `http://localhost:3000/api/resources`, {
+                    method: "get",
+                    headers: {
+                    'Content-type': 'application/json',
+                    'authorization': token,
+                    'userId': JSON.parse(userId)
+                    }
+                }
+                );
+                if (!response.ok) {
+                    throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                    );
+                }
+                let parsedResourcesData = await response.json();
+                setResourcesData(parsedResourcesData.response);
+                } catch (err) {
+                    alert(err);
+                }
+            }
+            getResourcesData()
         }
-        );
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        let actualData = await response.json();
-        setData(actualData);
-      } catch (err) {
-        alert(err);
-      }
-    }
-    getData()
-  }, [])
+    }, [])
   
   return (
     <div className="table-container">
@@ -45,7 +47,7 @@ export default function UsersPage() {
           </tr>
         </thead>
         <tbody>
-          {resourceTable.response?.map((resource) => {
+          {resourcesData.map((resource) => {
             return (<tr key={resource.id}>
               <td>{resource.id}</td>
               <td>{resource.name}</td>

@@ -7,6 +7,7 @@ import ResourcesPage from './pages/resourcesPage/resourcesPage';
 import UsersPage from './pages/usersPage/usersPage';
 import BookingsPage from './pages/bookingsPage/bookingsPage';
 import LoginPage from './pages/loginPage/loginPage';
+import Protected from './components/Protected/Protected';
 
 
 function App() {
@@ -22,9 +23,9 @@ function App() {
 
         <Route index element={<HomePage />} />
         <Route path='/login' element={<LoginPage setLogin={setLogin}/>} />
-        <Route path='/users' element={<UsersPage />} />
-        <Route path='/resources' element={<ResourcesPage />} />
-        <Route path='/bookings' element={<BookingsPage />} />
+        <Route path='/users' element={<Protected page={UsersPage}/>} />
+        <Route path='/resources' element={<Protected page={ResourcesPage}/>} />
+        <Route path='/bookings' element={<Protected page={BookingsPage}/>} />
       </Route>
 
     </Routes>

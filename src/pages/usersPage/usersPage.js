@@ -2,36 +2,38 @@ import React, { useState, useEffect } from "react"
 import "./usersPageStyles.css"
 
 export default function UsersPage() {
-
-  const [usersTable, setData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem("userId");
-    const getData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/api/users`, {
-          method: "get",
-          headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${token}`,
-            'userId': JSON.parse(userId)
+    if(token) {
+      let getUsersData = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/users`, {
+            method: "get",
+            headers: {
+              'Content-type': 'application/json',
+              'authorization': token,
+              'userId': JSON.parse(userId)
+            }
           }
-        }
-        );
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
           );
+          if (!response.ok) {
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          }
+          let parsedUsersData = await response.json();
+          setUsersData(parsedUsersData.response);
+        } catch (err) {
+          alert(err);
         }
-        let actualData = await response.json();
-        setData(actualData.response);
-      } catch (err) {
-        alert(err);
       }
+      getUsersData();
     }
-    getData()
+    
   }, [])
 
   return (
@@ -47,7 +49,7 @@ export default function UsersPage() {
           </tr>
         </thead>
         <tbody>
-          {usersTable.map((user) => {
+          {usersData.map((user) => {
             return (<tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.first_name}</td>

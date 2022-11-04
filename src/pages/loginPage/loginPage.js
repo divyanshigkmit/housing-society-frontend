@@ -12,7 +12,7 @@ export default function LoginPage({setLogin}) {
         e.preventDefault();
         setLogin(true);
         try {
-            let result = await fetch('http://localhost:3000/api/users/login', {
+            let result = await fetch('http://localhost:3000/api/login', {
                 method: 'post',
                 body: JSON.stringify({ email_id: email, pwd: password }),
                 headers: {

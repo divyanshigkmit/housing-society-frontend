@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react"
 import "./bookingsPageStyles.css"
 
-export default function BookingPage() {
+export default function BookingsPage() {
 
-  const [bookingsTable, setData] = useState([]);
+  const [bookingsData, setBookingsData] = useState([]);
   
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem("userId");
-    const getData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/api/bookings`, {
-          method: "get",
-          headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${token}`,
-            'userId': JSON.parse(userId)
-          }
+    if(token) {
+        const getBookingsData = async () => {
+            try {
+                const response = await fetch(
+                `http://localhost:3000/api/bookings`, {
+                    method: "get",
+                    headers: {
+                        'Content-type': 'application/json',
+                        'authorization': token,
+                        'userId': JSON.parse(userId)
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                    );
+                }
+                let parsedBookingsData = await response.json();
+                setBookingsData(parsedBookingsData.response);
+            } catch (err) {
+              alert(err);
+            }
         }
-        );
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        let actualData = await response.json();
-        setData(actualData.response);
-      } catch (err) {
-        alert(err);
-      }
+        getBookingsData()
     }
-    getData()
+    
   }, [])
 
   return (
@@ -46,7 +48,7 @@ export default function BookingPage() {
           </tr>
         </thead>
         <tbody>
-          {bookingsTable?.map((booking) => {
+          {bookingsData?.map((booking) => {
             return (<tr key={booking.id}>
               <td>{booking.id}</td>
               <td>{booking.resource_id}</td>
