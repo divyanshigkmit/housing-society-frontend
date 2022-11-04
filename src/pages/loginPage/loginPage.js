@@ -20,12 +20,15 @@ export default function LoginPage({setLogin}) {
                 }
             });
             let results = await result.json();
-            localStorage.setItem('token', results.token);
-            localStorage.setItem('userId', JSON.stringify(results.userId));
+            
 
-            if(result.status == 200) {
+            if(result.status === 200) {
                 setLogin(true);
                 navigate('/');
+                localStorage.setItem('token', results.token);
+                localStorage.setItem('userId', JSON.stringify(results.userId));
+            }else if(result.status === 401) {
+                alert("Incorrect email or password");
             }
             
             

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Protected(props) {
 
-    const pageDisplay = props.page;
+    const PageDisplay = props.page;
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -14,6 +14,6 @@ function Protected(props) {
     })
     
 
-    return <div><pageDisplay /></div>
+    return <div><PageDisplay /></div>
 }
 export default Protected;
