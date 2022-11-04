@@ -7,7 +7,7 @@ export default function ResourcesPage() {
   
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const userId = localStorage.getItem("userId");
+    
         if(token) {
             const getResourcesData = async () => {
                 try {
@@ -16,11 +16,9 @@ export default function ResourcesPage() {
                     method: "get",
                     headers: {
                     'Content-type': 'application/json',
-                    'authorization': token,
-                    'userId': JSON.parse(userId)
+                    'authorization': token
                     }
-                }
-                );
+                });
                 if (!response.ok) {
                     throw new Error(
                     `This is an HTTP error: The status is ${response.status}`

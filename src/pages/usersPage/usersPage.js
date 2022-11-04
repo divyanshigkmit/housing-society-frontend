@@ -4,9 +4,11 @@ import "./usersPageStyles.css"
 export default function UsersPage() {
   const [usersData, setUsersData] = useState([]);
 
+  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem("userId");
+    
     if(token) {
       let getUsersData = async () => {
         try {
@@ -15,11 +17,9 @@ export default function UsersPage() {
             method: "get",
             headers: {
               'Content-type': 'application/json',
-              'authorization': token,
-              'userId': JSON.parse(userId)
+              'authorization': token
             }
-          }
-          );
+          });
           if (!response.ok) {
             throw new Error(
               `This is an HTTP error: The status is ${response.status}`
@@ -31,9 +31,9 @@ export default function UsersPage() {
           alert(err);
         }
       }
-      getUsersData();
+      getUsersData(localStorage.getItem('token'));
     }
-    
+
   }, [])
 
   return (

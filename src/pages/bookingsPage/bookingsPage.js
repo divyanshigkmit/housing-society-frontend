@@ -7,7 +7,7 @@ export default function BookingsPage() {
   
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem("userId");
+    
     if(token) {
         const getBookingsData = async () => {
             try {
@@ -16,8 +16,7 @@ export default function BookingsPage() {
                     method: "get",
                     headers: {
                         'Content-type': 'application/json',
-                        'authorization': token,
-                        'userId': JSON.parse(userId)
+                        'authorization': token
                     }
                 });
                 if (!response.ok) {

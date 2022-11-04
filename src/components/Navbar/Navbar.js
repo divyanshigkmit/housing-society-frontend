@@ -7,33 +7,12 @@ export default function Navbar({isLogin, setLogin}) {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
         if(token) {
-            const checkForValidToken = async () => {
-                try {
-                  const response = await fetch(
-                    `http://localhost:3000/api/tokenCheck`, {
-                    method: "get",
-                    headers: {
-                      'Content-type': 'application/json',
-                      'authorization': token,
-                      'userId': JSON.parse(userId)
-                    }
-                  }
-                  );
-                  if (!response.ok) {
-                    throw new Error(
-                      `This is an HTTP error: The status is ${response.status}`
-                    );
-                  }
-                  let responseData = await response.json();
-                  if(responseData.status == 200) setLogin(true);
-                } catch (err) {
-                  setLogin(false);
-                }
-              }
-              checkForValidToken()
+            setLogin(true);
+        }else {
+            setLogin(false);
         }
         
-      }, [])
+    }, [])
     return (
         <>
         <div className="nav">
