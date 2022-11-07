@@ -8,7 +8,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    
+
     if(token) {
       let getUsersData = async () => {
         try {
@@ -31,7 +31,7 @@ export default function UsersPage() {
           alert(err);
         }
       }
-      getUsersData(localStorage.getItem('token'));
+      getUsersData();
     }
 
   }, [])
