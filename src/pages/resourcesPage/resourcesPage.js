@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import "./resourcesPageStyles.css"
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 export default function ResourcesPage() {
 
   const [resourcesData, setResourcesData] = useState([]);
@@ -12,7 +14,7 @@ export default function ResourcesPage() {
             const getResourcesData = async () => {
                 try {
                 const response = await fetch(
-                    `http://localhost:3000/api/resources`, {
+                    `${BASE_URL}/resources`, {
                     method: "get",
                     headers: {
                     'Content-type': 'application/json',

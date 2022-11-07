@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import "./bookingsPageStyles.css"
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 export default function BookingsPage() {
 
   const [bookingsData, setBookingsData] = useState([]);
@@ -12,7 +14,7 @@ export default function BookingsPage() {
         const getBookingsData = async () => {
             try {
                 const response = await fetch(
-                `http://localhost:3000/api/bookings`, {
+                `${BASE_URL}/bookings`, {
                     method: "get",
                     headers: {
                         'Content-type': 'application/json',

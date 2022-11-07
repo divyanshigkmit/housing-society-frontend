@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react"
 import "./usersPageStyles.css"
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 export default function UsersPage() {
   const [usersData, setUsersData] = useState([]);
 
-  
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     if(token) {
       let getUsersData = async () => {
         try {
           const response = await fetch(
-            `http://localhost:3000/api/users`, {
+            `${BASE_URL}/users`, {
             method: "get",
             headers: {
               'Content-type': 'application/json',

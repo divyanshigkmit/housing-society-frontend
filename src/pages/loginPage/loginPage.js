@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import "./loginPageStyles.css"
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 export default function LoginPage({setLogin}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,7 +14,7 @@ export default function LoginPage({setLogin}) {
         e.preventDefault();
         setLogin(true);
         try {
-            let result = await fetch('http://localhost:3000/api/login', {
+            let result = await fetch(`${BASE_URL}/login`, {
                 method: 'post',
                 body: JSON.stringify({ email_id: email, pwd: password }),
                 headers: {
