@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import "./bookingsPageStyles.css"
+import Spinner from 'react-bootstrap/Spinner'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export default function BookingsPage() {
 
   const [bookingsData, setBookingsData] = useState([]);
-  
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -28,6 +29,7 @@ export default function BookingsPage() {
                 }
                 let parsedBookingsData = await response.json();
                 setBookingsData(parsedBookingsData.response);
+                setLoading(true);
             } catch (err) {
               alert(err);
             }
@@ -39,7 +41,7 @@ export default function BookingsPage() {
 
   return (
     <div className="table-container">
-      <table>
+      {loading ? <table>
         <thead>
           <tr>
             <th>BookingId</th>
@@ -58,7 +60,10 @@ export default function BookingsPage() {
             </tr>)
           })}
         </tbody>
-      </table>
+      </table> : <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>}
+      
     </div>
   );
 }

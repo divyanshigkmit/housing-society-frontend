@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import "./usersPageStyles.css"
-import * as ReactBootstrap from "react-bootstrap"
+import Spinner from 'react-bootstrap/Spinner'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
@@ -63,7 +63,10 @@ export default function UsersPage() {
             </tr>)
           })}
         </tbody>
-      </table> : <ReactBootstrap.Spinner animation="border" />}
+      </table> : <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>}
+      
       
     </div>
   );
