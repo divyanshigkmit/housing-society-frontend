@@ -6,7 +6,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export default function UsersPage() {
   const [usersData, setUsersData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
