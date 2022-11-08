@@ -6,7 +6,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export default function UsersPage() {
   const [usersData, setUsersData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function UsersPage() {
           }
           let parsedUsersData = await response.json();
           setUsersData(parsedUsersData.response);
-          setLoading(false);
+          setLoading(true);
         } catch (err) {
           alert(err);
         }
