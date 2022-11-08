@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import "./resourcesPageStyles.css"
+import Spinner from 'react-bootstrap/Spinner'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export default function ResourcesPage() {
 
   const [resourcesData, setResourcesData] = useState([]);
-  
+  const [loading, setLoading] = useState(false);
     useEffect(() => {
         const token = localStorage.getItem('token');
     
@@ -28,6 +29,7 @@ export default function ResourcesPage() {
                 }
                 let parsedResourcesData = await response.json();
                 setResourcesData(parsedResourcesData.response);
+                setLoading(true);
                 } catch (err) {
                     alert(err);
                 }
@@ -38,7 +40,7 @@ export default function ResourcesPage() {
   
   return (
     <div className="table-container">
-      <table>
+      {loading ? <table>
         <thead>
           <tr>
             <th>ResourceId</th>
@@ -55,7 +57,10 @@ export default function ResourcesPage() {
             </tr>)
           })}
         </tbody>
-      </table>
+      </table> : <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>}
+      
     </div>
   );
 }
