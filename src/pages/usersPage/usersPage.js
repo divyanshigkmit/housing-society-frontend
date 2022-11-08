@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import "./usersPageStyles.css"
+import * as ReactBootstrap from "react-bootstrap"
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export default function UsersPage() {
   const [usersData, setUsersData] = useState([]);
-
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function UsersPage() {
           }
           let parsedUsersData = await response.json();
           setUsersData(parsedUsersData.response);
+          setLoading(false);
         } catch (err) {
           alert(err);
         }
@@ -38,8 +40,9 @@ export default function UsersPage() {
   }, [])
 
   return (
+
     <div className="table-container">
-      <table>
+      {loading ? <table>
         <thead>
           <tr>
             <th>UserId</th>
@@ -60,7 +63,8 @@ export default function UsersPage() {
             </tr>)
           })}
         </tbody>
-      </table>
+      </table> : <ReactBootstrap.Spinner animation="border" />}
+      
     </div>
   );
 }
